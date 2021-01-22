@@ -11,7 +11,7 @@ import natan.io.projeto1.entity.User;
 import natan.io.projeto1.repository.UserRepository;
 
 @Component
-public class DataInitializr implements ApplicationListener  <ContextRefreshedEvent>{
+public class DataInitializr implements ApplicationListener<ContextRefreshedEvent>{
 
 	@Autowired
 	UserRepository userRepository;
@@ -20,35 +20,23 @@ public class DataInitializr implements ApplicationListener  <ContextRefreshedEve
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		//System.out.print("\n\n Entrou aqui \n\n");
 		
+		
 		List<User> users =  userRepository.findAll();
 		
 		if(users.isEmpty()) {		
 			createUser("Joao", "joao@email.com");
 			createUser("Maria", "maria@email.com");
 			createUser("Jose", "jose@email.com");	
-		}
+		}		
+	
 		
-		User user = userRepository.findByNameQualquerCoisa("é");
+		User user = userRepository.findByNameIgnoreCaseLike("mar");
 		
-		System.out.println(user.getName());
+		System.out.println(user.getName());	
 		
-		user = userRepository.findByEmail("joao@email.com");
+		user = userRepository.findByEmailQualquerCoisa("joao@email.com");
 		
-		System.out.println(user.getName());
-		
-		
-		user = userRepository.findByNameIgnoreCase("maria");
-		
-		System.out.println(user.getName());
-		
-		
-		/*userRepository.deleteById(user.getId());
-		
-		user = userRepository.findAll().get(0);
-		
-		user.setName("novo nome");
-		
-		userRepository.save(user);*/
+		System.out.println(user.getName());	
 	}
 	
 	public void createUser(String name, String email) {

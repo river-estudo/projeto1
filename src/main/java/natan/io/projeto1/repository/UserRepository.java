@@ -1,17 +1,15 @@
 package natan.io.projeto1.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import natan.io.projeto1.entity.User;
 
-public interface UserRepository extends JpaRepository<User,Long>{
+public interface UserRepository extends MongoRepository<User,Long>{
 	
-	@Query("select u from User u where u.name  like  %:name%")
-	User findByNameQualquerCoisa(String name);
+	@Query("{'email' : ?0}")
+	User findByEmailQualquerCoisa(String email);
 	
-	User findByEmail(String email);
-	
-	User findByNameIgnoreCase(String name);
+	User findByNameIgnoreCaseLike(String name);
 
 }
